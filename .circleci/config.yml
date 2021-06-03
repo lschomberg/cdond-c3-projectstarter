@@ -128,9 +128,9 @@ jobs:
       - run: 
           name: scan backend
           command: |
-          cd backend
-          npm i
-          npm audit
+            cd backend
+            npm i
+            npm audit
       - save_cache:
           paths: [backend/node_modules]
           key: scan-backend
