@@ -116,7 +116,7 @@ jobs:
             npm audit
       - save_cache:
           paths: [backend/node_modules]
-          keys; scan-frontend
+          keys: scan-frontend
 
   scan-backend:
     docker:
