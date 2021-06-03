@@ -69,35 +69,71 @@ jobs:
 
   test-frontend:
     docker:
-      # Docker image here
+     - image: circleci/node:13.8.0
     steps:
-      # Checkout code from git
-      # Restore from cache
-      # Your job code here
+      - checkout
+      - restore_cache: 
+          keys: [test-frontend]
+      - run: 
+          name: test front end 
+          command: |
+            cd frontend
+            npm i
+            num run test
+      - save_cache:
+          paths: [frontend/node_modules]
+          key: test-frontend
                 
   test-backend:
     docker:
-      # Docker image here
+      - image: circleci/node:13.8.0
     steps:
-      # Checkout code from git
-      # Restore from cache
-      # Your job code here
+      - checkout
+      - restore_cache:
+          keys: [test-backend]
+      - run: 
+          name: test back end
+          command: | 
+            cd backend
+            npm i
+            npm run test
+      - save_cache:
+          paths: [backend/node_modules]
+          key: test-backend
             
   scan-frontend:
     docker:
-      # Docker image here
+      - image: circleci/node:13.8.0
     steps:
-      # Checkout code from git
-      # Restore from cache
-      # Your job code here
+      - checkout
+      - restore_cache:
+          keys: [scan-frontend]
+      - run: 
+          name: scan-frontend
+          command: |
+            cd frontend
+            npm i
+            npm audit
+      - save_cache:
+          paths: [backend/node_modules]
+          keys; scan-frontend
 
   scan-backend:
     docker:
-      # Docker image here
+      - image: circleci/node:13.8.0
     steps:
-      # Checkout code from git
-      # Restore from cache
-      # Your job code here
+      - checkout
+      - restore_caches:
+          keys: [scan-backend]
+      - run: 
+          name: scan backend
+          command: |
+          cd backend
+          npm i
+          npm audit
+      - save_cache:
+          paths: [backend/node_modules]
+          key: scan-backend
 
   deploy-infrastructure:
     docker:
@@ -107,8 +143,8 @@ jobs:
       - run:
           name: Ensure back-end infrastructure exists
           command: |
-            aws cloudformation deploy \
-              --template-file .circleci/files/backend.yml \
+            #aws cloudformation deploy \
+              #--template-file .circleci/files/backend.yml \
               #--tags project=your-tag \
               # --stack-name "your back-end stack name with workflow id" \
               # --parameter-overrides ID="your workflow id"  
